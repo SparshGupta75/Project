@@ -158,10 +158,10 @@
                         
 //                        HttpSession s = request.getSession();
 //                        session.removeAttribute("currentUser");
-                        Message m = new Message("Logout Successful from admin role.", "success", "alert-success");
-                        session.setAttribute("msg", m);
-                        response.sendRedirect("SignUpIn.jsp");
-                        
+//                        Message m = new Message("Logout Successful from admin role.", "success", "alert-success");
+//                        session.setAttribute("msg", m);
+//                        response.sendRedirect("SignUpIn.jsp");
+//                        
                         %>
                     </ul>
                 </div>

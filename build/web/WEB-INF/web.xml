@@ -4,19 +4,25 @@
         <servlet-name>signIn</servlet-name>
         <servlet-class>packages.signIn</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddPost</servlet-name>
+        <servlet-class>packages.AddPost</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>signIn</servlet-name>
         <url-pattern>/signIn</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddPost</servlet-name>
+        <url-pattern>/AddPost</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    
     <error-page>
         <error-code>404</error-code>
         <location>/Error404.jsp</location>
     </error-page>
-    
 </web-app>
