@@ -104,7 +104,7 @@
             
             Student student = (Student) session.getAttribute("currentUser");
             if (student == null) {
-                response.sendRedirect("SignUpIn.html");
+                response.sendRedirect("SignUpIn.jsp");
             }
         %>
         
@@ -202,7 +202,7 @@
                         <td><%=gender%></td>
                         <td><%=temp%></td>
                         <td><%=rs.getString("Dob")%></td>
-                        <td><%=rs.getString("Year")%></td>
+                        <td><%=rs.getString("sem")%></td>
                     </tr>
                     <%
                             }

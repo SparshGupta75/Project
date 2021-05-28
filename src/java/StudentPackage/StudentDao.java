@@ -28,7 +28,7 @@ public class StudentDao {
             stmt.setString(6, student.getGender());
             stmt.setString(7, student.getBranchID());
             stmt.setString(8 ,student.getDob());
-            stmt.setString(9 ,student.getYear());
+            stmt.setInt(9 ,student.getSem());
             
             stmt.executeUpdate();
             flag = true;
@@ -64,7 +64,7 @@ public class StudentDao {
                 student.setGender(set.getString("Gender"));
                 student.setBranchID(set.getString("BranchID"));
                 student.setDob(set.getString("Dob"));
-                student.setYear(set.getString("Year"));
+                student.setSem(set.getInt("sem"));
             }
             
             
@@ -74,5 +74,35 @@ public class StudentDao {
         
         return student;
     }
-    
+    public Student getUserByPostId(String userId)
+    {
+        Student student = null;
+        
+        try {
+            String query = "select * from student where SID=?";
+            PreparedStatement stmt = this.con.prepareStatement(query);
+            stmt.setString(1, userId);
+            ResultSet set = stmt.executeQuery();
+            if(set.next()){
+                student = new Student();
+                
+                String SID = set.getString("SID");
+                student.setSID(SID);
+                
+                student.setFirstName(set.getString("FirstName"));
+                student.setLastName(set.getString("LastName"));
+                student.setEmail(set.getString("Email"));
+                student.setPassword(set.getString("Password"));
+                student.setGender(set.getString("Gender"));
+                student.setBranchID(set.getString("BranchID"));
+                student.setDob(set.getString("Dob"));
+                student.setSem(set.getInt("sem"));
+                
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return student;
+    }
 }

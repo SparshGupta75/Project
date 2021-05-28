@@ -16,11 +16,11 @@ public class Student {
     private String Gender;
     private String BranchID;
     private String Dob;
-    private String Year;
+    private int sem;
 
     
 
-    public Student(String SID, String FirstName, String LastName, String Email, String Password, String Gender, String BranchID, String Dob, String Year) {
+    public Student(String SID, String FirstName, String LastName, String Email, String Password, String Gender, String BranchID, String Dob, int sem) {
         this.SID = SID;
         this.FirstName = FirstName;
         this.LastName = LastName;
@@ -29,7 +29,7 @@ public class Student {
         this.Gender = Gender;
         this.BranchID = BranchID;
         this.Dob = Dob;
-        this.Year = Year;
+        this.sem = sem;
     }
     public Student() {
     }
@@ -98,11 +98,20 @@ public class Student {
         this.Dob = Dob;
     }
 
-    public String getYear() {
-        return Year;
+    
+//    public String getYear() {
+//        return Year;
+//    }
+//
+//    public void setYear(String Year) {
+//        this.Year = Year;
+//    }
+
+    public int getSem() {
+        return sem;
     }
 
-    public void setYear(String Year) {
-        this.Year = Year;
+    public void setSem(int sem) {
+        this.sem = sem;
     }
 }

@@ -8,6 +8,22 @@
         <servlet-name>AddPost</servlet-name>
         <servlet-class>packages.AddPost</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LikeServlet</servlet-name>
+        <servlet-class>packages.LikeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgotPassword</servlet-name>
+        <servlet-class>packages.ForgotPassword</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>verifyCode</servlet-name>
+        <servlet-class>packages.verifyCode</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangePass</servlet-name>
+        <servlet-class>packages.ChangePass</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>signIn</servlet-name>
         <url-pattern>/signIn</url-pattern>
@@ -15,6 +31,22 @@
     <servlet-mapping>
         <servlet-name>AddPost</servlet-name>
         <url-pattern>/AddPost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LikeServlet</servlet-name>
+        <url-pattern>/LikeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgotPassword</servlet-name>
+        <url-pattern>/ForgotPassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>verifyCode</servlet-name>
+        <url-pattern>/verifyCode</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePass</servlet-name>
+        <url-pattern>/ChangePass</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

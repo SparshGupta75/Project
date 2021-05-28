@@ -1,4 +1,22 @@
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
+
+
+<%    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setHeader("Expires", "0");
+
+//        session.getAttribute("name");
+//        
+//        if(session.getAttribute("name")==null)
+//            response.sendRedirect("SignUpIn.html");
+    Student student = (Student) session.getAttribute("currentUser");
+    if (student == null) {
+        response.sendRedirect("SignUpIn.jsp");
+    }
+
+%>
 <%@page import="StudentPackage.Student"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -24,7 +42,8 @@
                 integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <title>JSP Page</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <title>Home - <%= student.getFirstName()%></title>
 
         <style>
             #footer {
@@ -53,7 +72,7 @@
             }
 
             #footer {
-                margin-top: 350px;
+                margin-top: 90px;
             }
 
             .footer-box .fa {
@@ -93,12 +112,10 @@
         </style>
     </head>
     <body>
-        
-        <%   
-        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        %>
-        
-        
+
+
+
+
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="HomePage.html">StuMan</a>
@@ -118,7 +135,7 @@
                         </li>
 
                         <li class="nav-item active">
-                            <a class="nav-link" href="SignUpIn.html">Fee Status</a>
+                            <a class="nav-link" href="feestatus.jsp">Fee Status</a>
                         </li>
 
                         <li class="nav-item active">
@@ -130,6 +147,10 @@
                         </li>
 
                         <li class="nav-item active">
+                            <a class="nav-link" href="Posts.jsp">Posts</a>
+                        </li>
+
+                        <li class="nav-item active">
                             <form action="logout" method="post"><input type="submit" value="Logout" class="nav-link" style="background: #343a40; box-shadow: 0px 0px 0px transparent; border: 0px solid transparent; text-shadow:0px 0px 0px transparent; color: white"></form>
                         </li>
 
@@ -137,27 +158,78 @@
                 </div>
             </div>
         </nav>
-        
-        <%
 
-            Student student = (Student) session.getAttribute("currentUser");
-            if (student == null) {
-                response.sendRedirect("SignUpIn.html");
-            }
 
-        %>
+        <!--        <div class="container">
+                    <div class="row offset-2">
+                        <div class="col-8">
+                            <h1>Welcome </h1>
+                        </div>
+                    </div>
+                </div>-->
 
-<!--        <div class="container">
-            <div class="row offset-2">
-                <div class="col-8">
-                    <h1>Welcome </h1>
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-6 offset-3">
+                    <br><br>
+                    <div style="text-align: center">
+                        <h1 style="color: black; margin-top:100px " class="mb-4"><b>Welcome <%= student.getFirstName()%> <%= student.getLastName()%></b></h1>
+                    </div>
+                    <table class="table table-bordered border-4">
+                        <tbody>
+                            <tr>
+                                <td>SID </td>
+                                <td><%= student.getSID()%></td>
+                            </tr>
+                            <tr>
+                                <td>Email </td>
+                                <td style="padding-left: -50px;"><%= student.getEmail()%></td>
+                            </tr>
+                            <tr>
+                                <td>DOB </td>
+                                <td><%
+                                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                                    String dob = student.getDob();
+                                    try {
+                                        java.util.Date date = (java.util.Date) formatter.parse(dob);
+                                        SimpleDateFormat formatter1 = new SimpleDateFormat("MMM dd, yyyy");
+                                        String DOB = formatter1.format(date);
+                                        out.println(DOB);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                    %></td>
+                            </tr>
+                            <tr>
+                                <td>Gender </td>
+                                <td><%
+                                    String g = student.getGender();
+                                    if (g.equals("M")) {
+                                        out.println("Male");
+                                    } else {
+                                        out.println("Female");
+                                    }
+
+
+                                    %></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>-->
+        </div>
 
-<div style="text-align: center">
-    <h1 style="color: black; margin-top:100px "><b>Welcome <%= student.getFirstName() %> <%= student.getLastName() %></b></h1>
-</div>
+        <br><br>
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-8 offset-2">
+                    <hr class="mt-3">
+                    <p><b id="motivation">Motivational Quote:<br> </b></p>
+                </div>
+            </div>
+        </div>
+
 
         <section id="footer">
             <img src="wavefooter.png" class="footer-img" alt="" color="black">
@@ -192,6 +264,7 @@
                 </div>
 
             </div>
-        </section>  
+        </section> 
+        <script src="JSFiles/quote.js"></script>
     </body>
 </html>

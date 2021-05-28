@@ -71,7 +71,7 @@ public class signUp extends HttpServlet {
             year = "1";
         }
         
-        Student student = new Student(SID, firstName,lastName,email,password,gender,branchID, DOB, year);
+        Student student = new Student(SID, firstName,lastName,email,password,gender,branchID, DOB, 6);
         StudentDao dao = new StudentDao(ConnectionProvider.getConnection());
         
         if(dao.saveStudent(student))

@@ -1,4 +1,5 @@
 
+<%@page import="StudentPackage.Student"%>
 <%@page import="Posts.Category"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="StudentPackage.ConnectionProvider"%>
@@ -23,7 +24,7 @@
                 integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        
+
         <title>Add Post!</title>
         <style>
             #footer {
@@ -151,6 +152,19 @@
         </style>
     </head>
     <body>
+
+        <%
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            response.setHeader("Pragma", "no-cache");
+            response.setHeader("Expires", "0");
+
+            Student student = (Student) session.getAttribute("currentUser");
+            if (student == null) {
+                response.sendRedirect("SignUpIn.jsp");
+            }else{
+                
+            }
+        %>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="HomePage.html">StuMan</a>
@@ -180,6 +194,10 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="StudentList.jsp">Student List</a>
                         </li>
+                        
+                        <li class="nav-item active">
+                            <a class="nav-link" href="Posts.jsp">Posts</a>
+                        </li>
 
                         <li class="nav-item active">
                             <form action="logout" method="post"><input type="submit" value="Logout" class="nav-link" style="background: #343a40; box-shadow: 0px 0px 0px transparent; border: 0px solid transparent; text-shadow:0px 0px 0px transparent; color: white"></form>
@@ -192,50 +210,49 @@
         <br>
         <br>
         <br>
-        <section id="form">
+        <section id="form" class="pb-5">
             <div class="content">
                 <!-- Nav pills -->
                 <ul class="nav nav-pills" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="pill" href="#login">Add Post Details</a>
                     </li>
-                    
+
                 </ul>
 
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div id="login" class="container tab-pane active">
                         <form action="AddPost" method="post" id="add-post-form">
-                            
+
                             <div class="form-group">
                                 <select class="form-control" name="cid">
                                     <option selected disabled>Select Post Category</option>
-                                    
-                                    <%
-                                    PostDao obj = new PostDao(ConnectionProvider.getConnection());
-                                    ArrayList<Category> list = obj.getAllCategories();
-                                    for(Category c:list)
-                                    {
-                                    
-                                    %>
-                                    
-                                    <option value="<%=c.getCid() %>"><%=c.getName() %></option>
-                                
-                                <%
-                                    }
-                                %>
-                            </select>
-                                </div>
-                            
 
-                            
+                                    <%
+                                        PostDao obj = new PostDao(ConnectionProvider.getConnection());
+                                        ArrayList<Category> list = obj.getAllCategories();
+                                        for (Category c : list) {
+
+                                    %>
+
+                                    <option value="<%=c.getCid()%>"><%=c.getName()%></option>
+
+                                    <%
+                                        }
+                                    %>
+                                </select>
+                            </div>
+
+
+
                             <div class="form-group">
                                 <input type="text" class="form-control" id="exampleFormControlInput2"
                                        placeholder="Enter Post Title" name="title" >
                             </div>
 
                             <div class="form-group">
-                                <textarea class="form-control" placeholder="Enter Post Content" style="max-height: 150px;" name="content"></textarea>
+                                <textarea class="form-control" placeholder="Enter Post Content" rows="7" style="max-height: 180px;" name="content"></textarea>
                             </div>
 
                             <div class="form-group">
@@ -258,10 +275,11 @@
             </div>
         </section>
 
-        
-        
-        
-        
+                                
+
+
+
+
         <section id="footer">
             <img src="wavefooter.png" class="footer-img" alt="" color="black">
             <div class="container">
@@ -296,7 +314,7 @@
 
             </div>
         </section> 
-                          
+
         <script
             src="https://code.jquery.com/jquery-3.4.1.min.js"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -306,33 +324,51 @@
         <!--<script src="js/myjs.js" type="text/javascript"></script>-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-    <!--add post javascript-->
-    
-    <script>
-        $(document).ready(function(e){
-//            alert("Loaded")
-            
-            $("#add-post-form").on("submit",function(event){
-                event.preventDefault();
-                console.log("submit clicked")
-                let form = new FormData(this);
-                $.ajax({
-                    url: "AddPost",
-                    type: 'POST',
-                    data: form,
-                    success: function (data, textStatus, jqXHR) {
-                        console.log(data);
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        
-                    },
-                    processData: false,
-                    contentType: false
+        <!--add post javascript-->
+
+        <script>
+            $(document).ready(function (e) {
+                
+                
+
+                $("#add-post-form").on("submit", function (event) {
+                    event.preventDefault();
+                    console.log("submit clicked")
+                    let form = new FormData(this);
+                    $.ajax({
+                        url: "AddPost",
+                        type: 'POST',
+                        data: form,
+                        success: function (data, textStatus, jqXHR) {
+                            console.log(data);
+                            if (data.trim() === 'done')
+                            {
+                                swal({
+                                    title: "Woohooo!",
+                                    text: "Your Content has been posted successfully!",
+                                    icon: "success",
+                                    button: "Okayy!",
+                                });
+                            }
+                            else
+                            {
+                                swal("OOPS!", "Something went Wrong. Please try again.", "error");
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            
+                            {
+                                swal("OOPS!", "Something went Wrong. Please try again.", "error");
+                            }
+
+                        },
+                        processData: false,
+                        contentType: false
+                    })
                 })
             })
-        })
-       
-    </script>
-                            
+
+        </script>
+
     </body>
 </html>

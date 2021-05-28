@@ -6,9 +6,11 @@
 package packages;
 
 import FacultyPackage.ConnectionProvider;
+import Posts.PicHelper;
 import Posts.Post;
 import Posts.PostDao;
 import StudentPackage.Student;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -46,18 +48,17 @@ public class AddPost extends HttpServlet {
             Part part = request.getPart("pic");
             
             HttpSession session = request.getSession();
-            Student student = (Student)session.getAttribute("currentUser");
-
-            
-            
-            out.println("your post title is "+title);
-            out.println(part.getSubmittedFileName());
+            Student student = (Student)session.getAttribute("currentUser"); 
             
             Post p = new Post(title, content, part.getSubmittedFileName(), null, cid, student.getSID());
             PostDao dao = new PostDao(ConnectionProvider.getConnection());
             if(dao.savePost(p))
             {
+                
+                String path = request.getRealPath("/") + "PostPictures" + File.separator + part.getSubmittedFileName();
+                PicHelper.saveFile(part.getInputStream(), path);
                 out.print("done");
+                
             }
             else
             {
